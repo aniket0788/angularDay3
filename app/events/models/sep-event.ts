@@ -1,6 +1,7 @@
 export class SepEvent {
-    constructor() { }
+    constructor() {
 
+    }
     eventId: number;
     eventCode: string;
     eventName: string;

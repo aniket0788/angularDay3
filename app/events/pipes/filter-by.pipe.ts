@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { SepEvent } from "../models/sep-event";
+
 @Pipe({
     name: 'eventsFilter'
 })

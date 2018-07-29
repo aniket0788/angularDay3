@@ -1,26 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+
 import { SepEvent } from "../models/sep-event";
 
 @Injectable()
 export class SepEventsService {
+    constructor(@Inject(HttpClient) private _http: HttpClient) {
 
-    constructor() { }
-
-    getAllEvents(): SepEvent[] {
-        return this.eventData;
     }
-
-    getSingleEvent(id: number): SepEvent {
-        let evnt:SepEvent = new SepEvent();
-        for (const event of this.eventData) {
-            if (event.eventId == id) {
-                evnt = event;
-            }
-        }
-        return evnt;
+    getAllEvents():Observable<SepEvent[]> {
+        return this._http.get<SepEvent[]>("http://localhost:9090/api/events");
     }
-
-    private eventData: SepEvent[] = [
+    getSingleEvent(id: number): Observable<SepEvent> {
+        return this._http.get<SepEvent>("http://localhost:9090/api/events/"+id);
+    }
+    registerNewEvent(event: Event):Observable<string> {
+        return this._http.post<string>("http://localhost:9090/api/events", event);
+    }
+    private eventsData: SepEvent[] = [
         {
             eventId: 1,
             eventCode: 'JQ3SEM',
@@ -86,6 +84,6 @@ export class SepEventsService {
             fees: 1500,
             attendance: 84,
             logo: 'images/bs3.png'
-        }
-    ]
+        },
+    ];
 }
